@@ -8,6 +8,41 @@
     <title>Json to Table</title>
   </head>
   <body>
+    <header class="flex items-center justify-between border-b-neutral-400 border-b-1 text-neutral-950 h-full px-4 py-2">
+      <h1 class="text-2xl font-semibold">
+        Json to Table
+      </h1>
+      <a href="#">
+        Github
+      </a>
+    </header>
+    <main class="flex flex-col items-start mt-4 px-4">
+      <section id="buttons">
+        <button id="select-json" type="button" class="button primary">
+          Select your JSON
+        </button>
+        
+      </section>
+      <div class="overflow-x-auto mt-4 w-full pb-4">
+        <table id="output-table" class="table-auto border-collapse border border-gray-300 w-full text-sm text-left">
+        </table>
+      </div>
+    </main>
+
+    <dialog class="dialog-center" id="select-json-dialog" aria-hidden="true">
+      <h2 class="text-xl">Choose your JSON</h2>
+      <section class="mt-4 flex items-stretch justify-start border-2 border-blue-700 rounded-xl">
+        <label for="json-file" class=" p-2 rounded-l-xl flex items-center justify-center cursor-pointer hover:text-neutral-800 hover:bg-neutral-200">
+          <input id="json-file" class="sr-only" type="file" accept="json"/>
+          <span>Select an file</span>
+        </label>
+        <button id="paste-json" class="button primary flex items-center gap-2">
+          Paste
+          <svg class="w-6 text-inherit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M104.6 48L64 48C28.7 48 0 76.7 0 112L0 384c0 35.3 28.7 64 64 64l96 0 0-48-96 0c-8.8 0-16-7.2-16-16l0-272c0-8.8 7.2-16 16-16l16 0c0 17.7 14.3 32 32 32l72.4 0C202 108.4 227.6 96 256 96l62 0c-7.1-27.6-32.2-48-62-48l-40.6 0C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48zM144 56a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM448 464l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L464 243.9 464 448c0 8.8-7.2 16-16 16zM256 512l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9l-67.9-67.9c-9-9-21.2-14.1-33.9-14.1L256 128c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64z" class="fill-current"/></svg>
+        </button>
+      </section>
+      <span id="error-json" class="text-red-700 mt-4"></span>
+    </dialog>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,1 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,900&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+    --font-sans: Roboto, sans-serif;
+}
+
+.button {
+    @apply px-5 py-2 rounded-md font-medium cursor-pointer
+}
+
+.button.primary {
+    @apply bg-blue-700 rounded-md text-neutral-50 hover:bg-blue-800 hover:text-neutral-100
+}
+
+.dialog-center::backdrop {
+    @apply bg-black/80 h-full w-full;
+}
+.dialog-center[open] {
+    @apply fixed inset-0 flex flex-col justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md p-4;
+}
