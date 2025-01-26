@@ -43,9 +43,28 @@ export function getJsonFields(json: Record<string, unknown>): string[][]{
     return fields;
 }
 
+export function fieldsToTitle(field: string[]): string {
+    return field.map((n, i) => i == 0 ? n.toLowerCase() : capitalize(n.toLowerCase())).join("");
+}
+
 export function accessDynamicField(path: string[], object: Record<string, unknown>){
-    if (path.length == 0) return object;
+    if (path.length == 0 || object == null) return object;
 
     //@ts-ignore
     return accessDynamicField(path.slice(1), object[path[0]])
+}
+
+export function downloadBlob(binaryData: Uint8Array, mimeType: string, filename: string) {
+    const blob = new Blob([binaryData], { type: mimeType });
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = filename; 
+
+    a.click();
+
+    URL.revokeObjectURL(url);
 }
