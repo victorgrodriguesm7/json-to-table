@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/dist/styles.css" rel="stylesheet">
+    <title>Json to Table</title>
+    <script type="module" crossorigin src="/json-to-table/assets/index-D5lO8Fnp.js"></script>
+    <link rel="stylesheet" crossorigin href="/json-to-table/assets/index-BmgSs47k.css">
+  </head>
+  <body>
+    <header class="flex items-center justify-between border-b-neutral-400 border-b-1 text-neutral-950 h-full px-4 py-2">
+      <h1 class="text-2xl font-semibold">
+        Json to Table
+      </h1>
+      <a href="#">
+        Github
+      </a>
+    </header>
+    <main class="flex flex-col items-start mt-4 px-4">
+      <section id="buttons" class="flex items-center gap-4">
+        <button id="select-json" type="button" class="button primary">
+          Select your JSON
+        </button>
+        <div id="download-buttons" class="items-center gap-4 hidden">
+          <button id="download-xlsx" class="button secondary flex gap-2" aria-label="Download as XLSX file">
+            XLSX
+            <svg class="w-6 text-inherit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" class="fill-current"/></svg>
+          </button>
+          <button id="download-csv" class="button secondary flex gap-2"  aria-label="Download as CSV file">
+            CSV
+            <svg class="w-6 text-inherit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" class="fill-current"/></svg>
+          </button>
+        </div>
+      </section>
+      <div class="overflow-x-auto mt-4 w-full pb-4">
+        <table id="output-table" class="table-auto border-collapse border border-gray-300 w-full text-sm text-left">
+        </table>
+      </div>
+    </main>
+
+    <dialog class="dialog-center" id="select-json-dialog" aria-hidden="true">
+      <div class="relative w-full flex items-center justify-center">
+        <h2 class="text-xl">
+          Choose your JSON
+        </h2>
+        <button id="close-dialog" class="p-2 absolute top-1/2 -right-2 -translate-y-1/2 cursor-pointer" aria-label="Close dialog">
+          <svg class="w-2 text-neutral-950" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" class="fill-current"/></svg>
+        </button>
+      </div>
+      <section class="mt-4 flex items-stretch justify-start border-2 border-blue-700 rounded-xl">
+        <label for="json-file" class=" p-2 rounded-l-xl flex items-center justify-center cursor-pointer hover:text-neutral-800 hover:bg-neutral-200">
+          <input id="json-file" class="sr-only" type="file" accept=".json"/>
+          <span>Select an file</span>
+        </label>
+        <button id="paste-json" class="button primary flex items-center gap-2">
+          Paste
+          <svg class="w-6 text-inherit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M104.6 48L64 48C28.7 48 0 76.7 0 112L0 384c0 35.3 28.7 64 64 64l96 0 0-48-96 0c-8.8 0-16-7.2-16-16l0-272c0-8.8 7.2-16 16-16l16 0c0 17.7 14.3 32 32 32l72.4 0C202 108.4 227.6 96 256 96l62 0c-7.1-27.6-32.2-48-62-48l-40.6 0C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48zM144 56a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM448 464l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L464 243.9 464 448c0 8.8-7.2 16-16 16zM256 512l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9l-67.9-67.9c-9-9-21.2-14.1-33.9-14.1L256 128c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64z" class="fill-current"/></svg>
+        </button>
+      </section>
+      <span id="error-json" class="text-red-700 mt-4"></span>
+    </dialog>
+  </body>
+</html>
