@@ -1,26 +1,147 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,900&display=swap');
-
 @import "tailwindcss";
 
 @theme {
     --font-sans: Roboto, sans-serif;
+    --color-primary-*: initial;
+    --color-secondary-*: initial;
+    --color-accent-*: initial;
+    --color-success-*: initial;
+    --color-warning-*: initial;
+    --color-error-*: initial;
+
+     --color-primary-50: #EFF6FF;
+    --color-primary-100: #DBEAFE;
+    --color-primary-200: #BFDBFE;
+    --color-primary-300: #93C5FD;
+    --color-primary-400: #60A5FA;
+    --color-primary-500: #3B82F6;
+    --color-primary-600: #2563EB;
+    --color-primary-700: #1D4ED8;
+    --color-primary-800: #1E40AF;
+    --color-primary-900: #1E3A8A;
+    --color-primary-950: #172554;
+
+     --color-secondary-50: #F0FDFA;
+    --color-secondary-100: #CCFBF1;
+    --color-secondary-200: #99F6E4;
+    --color-secondary-300: #5EEAD4;
+    --color-secondary-400: #2DD4BF;
+    --color-secondary-500: #14B8A6;
+    --color-secondary-600: #0D9488;
+    --color-secondary-700: #0F766E;
+    --color-secondary-800: #115E59;
+    --color-secondary-900: #134E4A;
+    --color-secondary-950: #042F2E;
+
+     --color-accent-50: #FFF7ED;
+    --color-accent-100: #FFEDD5;
+    --color-accent-200: #FED7AA;
+    --color-accent-300: #FDBA74;
+    --color-accent-400: #FB923C;
+    --color-accent-500: #F97316;
+    --color-accent-600: #EA580C;
+    --color-accent-700: #C2410C;
+    --color-accent-800: #9A3412;
+    --color-accent-900: #7C2D12;
+    --color-accent-950: #431407;
+
+     --color-success-50: #F0FDF4;
+    --color-success-100: #DCFCE7;
+    --color-success-200: #BBF7D0;
+    --color-success-300: #86EFAC;
+    --color-success-400: #4ADE80;
+    --color-success-500: #22C55E;
+    --color-success-600: #16A34A;
+    --color-success-700: #15803D;
+    --color-success-800: #166534;
+    --color-success-900: #14532D;
+    --color-success-950: #052E16;
+
+     --color-warning-50: #FFFBEB;
+    --color-warning-100: #FEF3C7;
+    --color-warning-200: #FDE68A;
+    --color-warning-300: #FCD34D;
+    --color-warning-400: #FBBF24;
+    --color-warning-500: #F59E0B;
+    --color-warning-600: #D97706;
+    --color-warning-700: #B45309;
+    --color-warning-800: #92400E;
+    --color-warning-900: #78350F;
+    --color-warning-950: #451A03;
+
+    --color-error-50: #FEF2F2;
+    --color-error-100: #FEE2E2;
+    --color-error-200: #FECACA;
+    --color-error-300: #FCA5A5;
+    --color-error-400: #F87171;
+    --color-error-500: #EF4444;
+    --color-error-600: #DC2626;
+    --color-error-700: #B91C1C;
+    --color-error-800: #991B1B;
+    --color-error-900: #7F1D1D;
+    --color-error-950: #450A0A;
+
+    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-dropdown: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    --animate-fade-in: fadeIn 0.3s ease-out;
+    --animate-slide-up: slideUp 0.5s ease-out;
+    --animate-bounce-slow: bounce 3s infinite;
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        0% {
+            transform: translateY(20px);
+            opacity: 0
+        }
+
+        100% {
+            transform: translateY(0px);
+            opacity: 1
+        }
+    }
 }
 
-.button {
-    @apply px-5 py-2 rounded-md font-medium cursor-pointer
-}
+@layer components {
+    .button {
+        @apply px-5 py-2 rounded-md font-medium cursor-pointer
+    }
+    
+    .button.primary {
+        @apply px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg cursor-pointer transition duration-150 ease-in-out
+    }
+    
+    .button.secondary {
+        @apply flex items-center justify-center px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition duration-150 ease-in-out
+    }
+    
+    .dialog-center::backdrop {
+        @apply bg-black/80 h-full w-full;
+    }
+    .dialog-center[open] {
+        @apply fixed inset-0 flex flex-col justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md p-4;
+    }
 
-.button.primary {
-    @apply bg-blue-700 rounded-md text-neutral-50 hover:bg-blue-800 hover:text-neutral-100 border-1 border-blue-700
-}
-
-.button.secondary {
-    @apply bg-neutral-300 rounded-md text-neutral-700 hover:bg-neutral-200 hover:text-neutral-800 border-1 border-neutral-400
-}
-
-.dialog-center::backdrop {
-    @apply bg-black/80 h-full w-full;
-}
-.dialog-center[open] {
-    @apply fixed inset-0 flex flex-col justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md p-4;
+    .input-file-compact {
+        border: 0px;
+        clip: rect(0px, 0px, 0px, 0px);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: 0px -1px -1px 0px;
+        overflow: hidden;
+        padding: 0px;
+        position: absolute;
+        width: 1px;
+        white-space: nowrap;
+    }
 }

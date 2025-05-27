@@ -1,4 +1,3 @@
-import '../styles/global.css';
 import { tableToCSV, tableToXLSX } from './convert';
 import { getJsonFields, checkJson, accessDynamicField, fieldsToTitle } from './utils';
 
@@ -12,7 +11,7 @@ function buildTableHeader(fields: string[][]): HTMLTableSectionElement {
 
     thead.innerHTML = `
         <tr class="bg-gray-100">
-            ${transformedFields.map((field) => `<th class='border border-gray-300 px-4 py-2 font-semibold'>${field}</th>`).join("")}
+            ${transformedFields.map((field) => `<th class='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors'>${field}</th>`).join("")}
         </tr>
     `;
 
@@ -24,25 +23,26 @@ function buildTableBody(fields: string[][], data: Record<string, unknown>[]){
 
     tbody.innerHTML = data.map((item) => `
             <tr class="hover:bg-gray-50">
-                ${fields.map((path) => `<td class="border border-gray-300 px-4 py-2">${accessDynamicField(path, item)}</td>`).join("")}
+                ${fields.map((path) => `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${accessDynamicField(path, item)}</td>`).join("")}
             </tr>
         `).join("")
     return tbody;
 }
 
 function setupDownloadButtons(fields: string[][], data: Record<string, unknown>[]){
-    const downloadCSV = document.querySelector("#download-csv")!;
-    const downloadXLXS = document.querySelector("#download-xlsx")!;
+    const downloadCSV = document.querySelector<HTMLButtonElement>("#download-csv")!;
+    const downloadXLXS = document.querySelector<HTMLButtonElement>("#download-xlsx")!;
 
-    downloadCSV.addEventListener("click", () => tableToCSV(fields, data));
-    downloadXLXS.addEventListener("click", () => tableToXLSX(fields, data));
-
+    downloadCSV.onclick = () => tableToCSV(fields, data);
+    downloadXLXS.onclick = () => tableToXLSX(fields, data);
 }
 
 function handleParseJson(json: Record<string, unknown>[]){
     const table = document.querySelector("#output-table")!;
     const buttons = document.querySelector("#download-buttons")!;
+    const overlay = document.querySelector("#overlay")!;
 
+    overlay.classList.add("hidden");
     buttons.classList.remove("hidden");
     buttons.classList.add("flex");
 
@@ -56,7 +56,7 @@ function handleParseJson(json: Record<string, unknown>[]){
     table.appendChild(buildTableBody(fields, json));
 }
 
-async function handlePaste(closeModal: () => void, errorElement: HTMLSpanElement){
+async function handlePaste(errorElement: HTMLSpanElement){
     errorElement.innerText = "";
 
     const rawJson = await navigator.clipboard.readText();
@@ -64,15 +64,13 @@ async function handlePaste(closeModal: () => void, errorElement: HTMLSpanElement
     const [ valid, message, parsedJson ] = checkJson(rawJson);
 
     if (valid){
-        closeModal();
-
         return handleParseJson(parsedJson)
     }
 
     errorElement.innerText = message;
 }
 
-async function handleFile(e: Event, closeModal: () => void, errorElement: HTMLSpanElement){
+async function handleFile(e: Event, errorElement: HTMLSpanElement){
     const target = e.target as HTMLInputElement
 
     const files = target.files;
@@ -86,8 +84,6 @@ async function handleFile(e: Event, closeModal: () => void, errorElement: HTMLSp
             const [ valid, message, parsedJson ] = checkJson(content as string);
 
             if (valid){
-                closeModal();
-
                 return handleParseJson(parsedJson)
             }
 
@@ -98,25 +94,13 @@ async function handleFile(e: Event, closeModal: () => void, errorElement: HTMLSp
     }
 }
 
-function setupDialogButtons(closeModal: () => void){
+function main(){
     const pasteJSON = document.querySelector<HTMLButtonElement>("#paste-json");
     const fileJSON = document.querySelector<HTMLInputElement>("#json-file");
-    const closeDialog = document.querySelector<HTMLInputElement>("#close-dialog");
     const errorElement = document.querySelector<HTMLSpanElement>("#error-json");
 
-    pasteJSON?.addEventListener("click", () => handlePaste(closeModal,errorElement!))
-    fileJSON?.addEventListener("change", (e) => handleFile(e, closeModal,errorElement!))
-    closeDialog?.addEventListener("click", closeModal)
-}
-
-function main(){
-    const selectJson = document.querySelector<HTMLButtonElement>("#select-json");
-    const selectJsonDialog = document.querySelector<HTMLDialogElement>("#select-json-dialog");
-
-
-    selectJson?.addEventListener("click", () => selectJsonDialog?.showModal());
-
-    setupDialogButtons(() => selectJsonDialog?.close())
+    pasteJSON?.addEventListener("click", () => handlePaste(errorElement!))
+    fileJSON?.addEventListener("change", (e) => handleFile(e,errorElement!))
 }
 
 

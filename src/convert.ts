@@ -24,11 +24,11 @@ export function tableToCSV(fields: string[][], json: Record<string, unknown>[] )
 export function tableToXLSX(fields: string[][], json: Record<string, unknown>[]) {
     const data: any[] = prepareJson(fields, json);
 
-    const ws = XLSX.utils.aoa_to_sheet(data);
+    const worksheet = XLSX.utils.json_to_sheet(data);
 
-    const wb = XLSX.utils.book_new();
+    const workbook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(wb, ws, "Dados");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Json Data");
 
-    XLSX.writeFile(wb, "data.xlsx");
+    XLSX.writeFile(workbook, "data.xlsx");
 }
